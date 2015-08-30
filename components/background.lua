@@ -4,31 +4,42 @@ Background = Class{
         
     init =  function(self)
                         	
+        self.useColorTileSet = false;
+        
         self.backgroundLayers = {}
         self.tileQuads = {}
-        self.tilesetImage = love.graphics.newImage("assets/image/trees.png")	
-        --self.tilesetImage = love.graphics.newImage("assets/image/4000x500_3.png")
+        
+        local tileSetImageName = "assets/image/trees.png";
+        if (self.useColorTileSet) then
+            tileSetImageName = "assets/image/4000x500_3.png"
+        end
+        
+        self.tilesetImage = love.graphics.newImage(tileSetImageName)
+
         self.tilesetImage:setFilter("nearest", "linear") 
 
         self.spriteWidth = 256
         self.spriteHeight = 768
-                
+        
+        local tileSetWidth = 2048;
+        if (self.useColorTileSet) then
+            tileSetWidth = 4000;
+        end       
         for i=1, 8 do
-            self.tileQuads[i] = love.graphics.newQuad( (i-1) * self.spriteWidth, 0, self.spriteWidth, self.spriteHeight, 2048, self.spriteHeight )
-            --self.tileQuads[i] = love.graphics.newQuad( (i-1) * self.spriteWidth, 0, self.spriteWidth, self.spriteHeight, 4000, self.spriteHeight )
+            self.tileQuads[i] = love.graphics.newQuad( (i-1) * self.spriteWidth, 0, self.spriteWidth, self.spriteHeight, tileSetWidth, self.spriteHeight )
         end
----[[
-        table.insert(self.backgroundLayers,BackgroundLayer({5,3,5,4,5,6,5,8,7,7},0.45,{250,0,0,255},30,0,0))
-        table.insert(self.backgroundLayers,BackgroundLayer({6,7,8,3,4,5,3,3,7,5,4},0.65,{250,0,0,255},50,0,0))
-        table.insert(self.backgroundLayers,BackgroundLayer({8,7,6,5,4,3,4,6,7,5},0.85,{0,250,0,255},80,0,0))
-        table.insert(self.backgroundLayers,BackgroundLayer({3,4,5,6,7,8},1.0,{0,0,0,255},110,0,0))
-  --]]
---[[
-        table.insert(self.backgroundLayers,BackgroundLayer({5,3,5,4,5,6,5,8,7,7},0.45,{115,115,115,230},30,0,0))
-        table.insert(self.backgroundLayers,BackgroundLayer({6,7,8,3,4,5,3,3,7,5,4},0.65,{135,135,135,240},50,0,0))
-        table.insert(self.backgroundLayers,BackgroundLayer({8,7,6,5,4,3,4,6,7,5},0.85,{205,205,205,250},80,0,0))
-        table.insert(self.backgroundLayers,BackgroundLayer({3,4,5,6,7,8},1.0,{255,255,255,255},110,0,0))  
---]]
+
+        if (self.useColorTileSet) then
+            table.insert(self.backgroundLayers,BackgroundLayer({5,3,5,4,5,6,5,8,7,7},0.45,{250,0,0,255},30,0,0))
+            table.insert(self.backgroundLayers,BackgroundLayer({6,7,8,3,4,5,3,3,7,5,4},0.65,{250,0,0,255},50,0,0))
+            table.insert(self.backgroundLayers,BackgroundLayer({8,7,6,5,4,3,4,6,7,5},0.85,{0,250,0,255},80,0,0))
+            table.insert(self.backgroundLayers,BackgroundLayer({3,4,5,6,7,8},1.0,{0,0,0,255},110,0,0))
+        else
+            table.insert(self.backgroundLayers,BackgroundLayer({5,3,5,4,5,6,5,8,7,7},0.45,{115,115,115,230},30,0,0))
+            table.insert(self.backgroundLayers,BackgroundLayer({6,7,8,3,4,5,3,3,7,5,4},0.65,{135,135,135,240},50,0,0))
+            table.insert(self.backgroundLayers,BackgroundLayer({8,7,6,5,4,3,4,6,7,5},0.85,{205,205,205,250},80,0,0))
+            table.insert(self.backgroundLayers,BackgroundLayer({3,4,5,6,7,8},1.0,{255,255,255,255},110,0,0))       
+        end
     end;
                 
     update = function(self,dt)
